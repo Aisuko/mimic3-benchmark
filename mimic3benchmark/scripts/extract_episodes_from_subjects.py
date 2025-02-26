@@ -2,6 +2,7 @@ import argparse
 import os
 import sys
 from tqdm import tqdm
+import pandas as pd
 
 from mimic3benchmark.subject import read_stays, read_diagnoses, read_events, get_events_for_stay,\
     add_hours_elpased_to_events
@@ -72,5 +73,18 @@ for subject_dir in tqdm(os.listdir(args.subjects_root_path), desc='Iterating ove
         columns = list(episode.columns)
         columns_sorted = sorted(columns, key=(lambda x: "" if x == "Hours" else x))
         episode = episode[columns_sorted]
-        episode.to_csv(os.path.join(args.subjects_root_path, subject_dir, 'episode{}_timeseries_intime_{}_outtime_{}.csv'.format(stay_id, intime, outtime)),
-                       index_label='Hours')
+
+        # Safely convert timestamps to strings
+        intime_str = intime.strftime('%Y-%m-%d_%H:%M:%S') if pd.notnull(intime) else 'NaT'
+        outtime_str = outtime.strftime('%Y-%m-%d_%H:%M:%S') if pd.notnull(outtime) else 'NaT'
+
+        episode.to_csv(
+            os.path.join(
+                args.subjects_root_path, 
+                subject_dir, 
+                'episode{}_timeseries_intime_{}_outtime_{}.csv'.format(
+                    stay_id, 
+                    intime_str, 
+                    outtime_str
+                )
+        ), index_label='Hours')

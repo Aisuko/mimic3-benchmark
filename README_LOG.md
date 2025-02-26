@@ -1,4 +1,13 @@
 
+## First step
+
+```bash
+python -m mimic3benchmark.scripts.extract_subjects {PATH TO MIMIC-III CSVs} data/root/
+
+Processing LABEVENTS table: 100%|█████████████████████████████████████████████████▉| 27854055/27854056 [03:08<00:00, 147397.87it/s]
+Processing OUTPUTEVENTS table: 100%|█████████████████████████████████████████████████▉| 4349218/4349219 [00:47<00:00, 90796.22it/s]
+```
+
 ## Second step
 
 * Fix some issues (ICU stay ID is missing)
@@ -20,10 +29,12 @@ icustay_missing_in_stays: 7115720
 
 ## Third step
 
+In this step we will get data file with specific format
+
 ```bash
 python -m mimic3benchmark.scripts.extract_episodes_from_subjects data/root/
 
-Iterating over subjects: 100%|██████████████████████████████████████████████████████████████████████████| 33802/33802 [46:55<00:00, 12.01it/s]
+Iterating over subjects: 100%|████████████████████████████████████████████████████████████████████████████████| 33802/33802 [1:18:08<00:00,  7.21it/s]
 ```
 
 ## Fourth step(Split the dataset)
