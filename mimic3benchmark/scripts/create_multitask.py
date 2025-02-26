@@ -40,7 +40,8 @@ def process_partition(args, definitions, code_to_group, id_to_group, group_to_id
 
         for ts_filename in patient_ts_files:
             with open(os.path.join(patient_folder, ts_filename)) as ts_file:
-                lb_filename = ts_filename.replace("_timeseries", "")
+                #lb_filename = ts_filename.replace("_timeseries", "")
+                lb_filename = ts_filename.split("_")[0] + ".csv"
                 label_df = pd.read_csv(os.path.join(patient_folder, lb_filename))
 
                 # empty label file, skip globally

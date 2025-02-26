@@ -67,10 +67,10 @@ for subject_dir in tqdm(os.listdir(args.subjects_root_path), desc='Iterating ove
             episodic_data.loc[stay_id, 'Weight'] = get_first_valid_from_timeseries(episode, 'Weight')
             episodic_data.loc[stay_id, 'Height'] = get_first_valid_from_timeseries(episode, 'Height')
         episodic_data.loc[episodic_data.index == stay_id].to_csv(os.path.join(args.subjects_root_path, subject_dir,
-                                                                              'episode{}.csv'.format(i+1)),
+                                                                              'episode{}.csv'.format(stay_id)),
                                                                  index_label='Icustay')
         columns = list(episode.columns)
         columns_sorted = sorted(columns, key=(lambda x: "" if x == "Hours" else x))
         episode = episode[columns_sorted]
-        episode.to_csv(os.path.join(args.subjects_root_path, subject_dir, 'episode{}_timeseries.csv'.format(i+1)),
+        episode.to_csv(os.path.join(args.subjects_root_path, subject_dir, 'episode{}_timeseries_intime_{}_outtime_{}.csv'.format(stay_id, intime, outtime)),
                        index_label='Hours')

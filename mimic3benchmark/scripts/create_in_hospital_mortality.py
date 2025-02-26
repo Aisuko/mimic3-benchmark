@@ -19,7 +19,8 @@ def process_partition(args, partition, eps=1e-6, n_hours=48):
 
         for ts_filename in patient_ts_files:
             with open(os.path.join(patient_folder, ts_filename)) as tsfile:
-                lb_filename = ts_filename.replace("_timeseries", "")
+                #lb_filename = ts_filename.replace("_timeseries", "")
+                lb_filename = ts_filename.split("_")[0] + ".csv"
                 label_df = pd.read_csv(os.path.join(patient_folder, lb_filename))
 
                 # empty label file
