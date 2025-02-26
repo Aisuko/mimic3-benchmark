@@ -32,3 +32,11 @@ Iterating over subjects: 100%|████████████████�
 python -m mimic3benchmark.scripts.split_train_and_test data/root/
 
 ```
+
+## Fifth step
+
+```bash
+python -m mimic3benchmark.scripts.create_in_hospital_mortality data/root/ data/in-hospital-mortality/
+
+Number of created samples: 17903
+```
