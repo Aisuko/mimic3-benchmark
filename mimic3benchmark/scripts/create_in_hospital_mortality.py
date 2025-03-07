@@ -32,8 +32,9 @@ def process_partition(args, partition, eps=1e-6, n_hours=48):
                 if pd.isnull(los):
                     print("\n\t(length of stay is missing)", patient, ts_filename)
                     continue
-
-                if los < n_hours - eps:
+                
+                # skip patients who stayed in the ICU less than n_hours
+                if los > n_hours - eps:
                     continue
 
                 ts_lines = tsfile.readlines()
@@ -41,8 +42,7 @@ def process_partition(args, partition, eps=1e-6, n_hours=48):
                 ts_lines = ts_lines[1:]
                 event_times = [float(line.split(',')[0]) for line in ts_lines]
 
-                ts_lines = [line for (line, t) in zip(ts_lines, event_times)
-                            if -eps < t < n_hours + eps]
+                ts_lines = [line for (line, t) in zip(ts_lines, event_times) if -eps < t < 48 + eps]
 
                 # no measurements in ICU
                 if len(ts_lines) == 0:
